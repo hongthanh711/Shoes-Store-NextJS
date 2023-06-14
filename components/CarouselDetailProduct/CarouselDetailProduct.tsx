@@ -61,7 +61,7 @@ export default function CarouselDetailProduct() {
                 </SwiperSlide>
             </Swiper>
             <Swiper
-                onSwiper={setThumbsSwiper}
+                // onSwiper={setThumbsSwiper}
                 spaceBetween={10}
                 slidesPerView={4}
                 freeMode={true}
