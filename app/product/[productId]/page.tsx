@@ -1,9 +1,14 @@
+'use client'
 import HeartIcon from '@/public/svg/HeartIcon'
 import React from 'react'
 import CarouselDetailProduct from '../../../components/CarouselDetailProduct/CarouselDetailProduct'
 import CarouselRelatedProduct from '@/components/CarouselRelatedProduct/CarouselRelatedProduct'
+import Button from '@/components/Button/Button'
+import { useAppSelector } from '@/store/hook'
 
 export default function DetailProduct() {
+    // const isLogin = useAppSelector((state) => state.auth.isLogin)
+    // console.log(isLogin)
     return (
         <div className="p-8">
             {/* <CarouselDetailProduct /> */}
@@ -41,15 +46,13 @@ export default function DetailProduct() {
                         <p>Size selection is required</p>
                     </div>
                     <div>
-                        <button className="border border-black rounded-full py-3 w-full my-2 flex justify-center items-center gap-1 bg-black text-white">
-                            Add to Card
-                        </button>
-                        <button className="border border-black rounded-full py-3 w-full my-2 flex justify-center items-center gap-1">
+                        <Button>Add to Card</Button>
+                        <Button variant="secondary">
                             <span>Wishlist</span>
                             <div className="w-4 h-4">
                                 <HeartIcon />
                             </div>
-                        </button>
+                        </Button>
                     </div>
                     <div>
                         <p className="text-[18px] font-semibold">Product Detail</p>

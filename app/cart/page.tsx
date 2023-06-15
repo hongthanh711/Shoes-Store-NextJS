@@ -1,3 +1,4 @@
+import Button from '@/components/Button/Button'
 import DeleteBinLineIcon from '@/public/svg/DeleteBinIcon'
 import Image from 'next/image'
 import React from 'react'
@@ -49,9 +50,7 @@ export default function Cart() {
                                 perspiciatis.
                             </p>
                         </div>
-                        <button className="border border-black rounded-full py-3 w-full my-2 flex justify-center items-center gap-1 bg-black text-white">
-                            Checkout
-                        </button>
+                        <Button>Checkout</Button>
                     </div>
                 </div>
             </div>
