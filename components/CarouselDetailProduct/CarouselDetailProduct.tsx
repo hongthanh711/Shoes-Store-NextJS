@@ -48,7 +48,7 @@ export default function CarouselDetailProduct() {
             </div>
             <div>
                 <div className="relative w-full h-full overflow-hidden">
-                    <img className="object-cover" src={itemActive.src} alt={itemActive.alt} fill />
+                    <img className="object-cover" src={itemActive.src} alt={itemActive.alt} />
                 </div>
             </div>
         </div>
