@@ -1,12 +1,15 @@
+import { ShoesItemType } from '@/types/ShoesItem.type'
 import Image from 'next/image'
 import React from 'react'
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
-export default function CardProduct({ ...rest }: CardProps) {
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+    item: ShoesItemType
+}
+export default function CardProduct({ item, ...rest }: CardProps) {
     return (
         <div {...rest} className="w-full cursor-pointer">
             <div className="w-full aspect-square relative">
-                <Image fill src="/p1.png" alt="product-1" />
+                <Image className="object-cover" fill src={item.srcImg} alt="product-1" />
             </div>
             <div className="p-2 w-full">
                 <p>Jodan Delta 3 low</p>

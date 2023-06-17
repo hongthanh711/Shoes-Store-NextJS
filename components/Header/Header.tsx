@@ -4,15 +4,58 @@ import DownOpenIcon from '@/public/svg/DownOpenIcon.tsx'
 import HeartIcon from '@/public/svg/HeartIcon'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
-import Modal from '../Button/Modal'
+import Modal from '../Modal/Modal'
 import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth'
 import { authentication } from '@/firebase-config'
 import { useAppDispatch } from '@/store/hook'
 import { login, logout } from '@/store/authSlice'
 
 type Props = {}
+
+interface NavLinkType {
+    href: string
+    title: string
+}
+
+const navLinkData: NavLinkType[] = [
+    {
+        href: '/',
+        title: 'Home',
+    },
+    {
+        href: '/about',
+        title: 'About',
+    },
+    {
+        href: '/categories',
+        title: 'Categories',
+    },
+    {
+        href: '/contact',
+        title: 'Contact',
+    },
+]
+
+const dropDownData: NavLinkType[] = [
+    {
+        href: '/jordan',
+        title: 'Jordan',
+    },
+    {
+        href: '/sneaker',
+        title: 'Sneaker',
+    },
+    {
+        href: '/running-shoes',
+        title: 'Running Shoes',
+    },
+    {
+        href: '/football-shoes',
+        title: 'Footbal Shoes',
+    },
+]
 
 // const dropDownData = [{
 //     href : 'jordan'
@@ -23,8 +66,9 @@ export default function Header({}: Props) {
     const [isDropDown, setIsDropDown] = useState<boolean>(false)
     const [isModalLogIn, setIsModalLogIn] = useState<boolean>(false)
     const router = useRouter()
+    const pathname = usePathname()
     const dropDownRef = useRef<any>()
-    const dispatch = useAppDispatch()
+    // const dispatch = useAppDispatch()
 
     useEffect(() => {
         let handler = (e: any) => {
@@ -97,84 +141,78 @@ export default function Header({}: Props) {
                 </div>
 
                 <div>
-                    <ul className="flex gap-8">
-                        <li>
-                            <Link href="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link href="/about">About</Link>
-                        </li>
-                        <li
-                            onClick={() => setIsDropDown(!isDropDown)}
-                            className="relative"
-                            ref={dropDownRef}
-                        >
-                            <div className="flex gap-2 cursor-pointer">
-                                <div>Categories</div>
-                                <div className="w-3">
-                                    <DownOpenIcon />
-                                </div>
-                                {isDropDown && (
-                                    <div className="absolute top-full border-1 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 z-20">
-                                        <ul className="py-2 text-sm text-gray-700">
-                                            <li>
-                                                <Link
-                                                    href="#"
-                                                    className="block px-4 py-2 hover:bg-gray-100"
-                                                >
-                                                    Jordan
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    href="#"
-                                                    className="block px-4 py-2 hover:bg-gray-100"
-                                                >
-                                                    Sneaker
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    href="#"
-                                                    className="block px-4 py-2 hover:bg-gray-100"
-                                                >
-                                                    Running Shoes
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    href="#"
-                                                    className="block px-4 py-2 hover:bg-gray-100"
-                                                >
-                                                    Football Shoes
-                                                </Link>
-                                            </li>
-                                        </ul>
+                    <div className="flex gap-8">
+                        {navLinkData.map((navLink: NavLinkType) => {
+                            if (navLink.href === '/categories') {
+                                return (
+                                    <div
+                                        key={navLink.href}
+                                        onClick={() => setIsDropDown(!isDropDown)}
+                                        className="relative"
+                                        ref={dropDownRef}
+                                    >
+                                        <div className="flex gap-2 cursor-pointer">
+                                            <div>{navLink.title}</div>
+                                            <div className="w-3">
+                                                <DownOpenIcon />
+                                            </div>
+                                        </div>
+                                        {isDropDown && (
+                                            <div className="absolute top-full border-1 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 z-20">
+                                                <div className="py-2 text-sm text-gray-700">
+                                                    {dropDownData.map((link: NavLinkType) => {
+                                                        return (
+                                                            <Link
+                                                                href={`/categories${link.href}`}
+                                                                key={link.href}
+                                                                className="block px-4 py-2 hover:bg-gray-100"
+                                                            >
+                                                                {link.title}
+                                                            </Link>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                            </div>
-                        </li>
-                        <li>
-                            <Link href="/contact">Contact</Link>
-                        </li>
-                    </ul>
+                                )
+                            }
+                            return (
+                                <div key={navLink.href}>
+                                    <Link
+                                        className={
+                                            pathname === navLink.href ? 'font-bold' : undefined
+                                        }
+                                        href={navLink.href}
+                                    >
+                                        {navLink.title}
+                                    </Link>
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>
 
                 {isLogin ? (
                     <div className="flex gap-4">
                         <div className="relative">
-                            {/* <div className="text-[10px] p-1 bg-[#DC2626] absolute z-20 -top-1 right-0 rounded-full">
-                            51
-                        </div> */}
+                            <div className="text-[10px] text-center absolute z-20 -top-1 right-0 w-4 h-4 leading-4 rounded-full bg-[#00000026] bg-opacity-50">
+                                51
+                            </div>
                             <div className="transition-all duration-200 hover:bg-[#00000026] p-2 rounded-full">
                                 <div className="w-5">
                                     <HeartIcon />
                                 </div>
                             </div>
                         </div>
-                        <div className="transition-all duration-200 hover:bg-[#00000026] p-2 rounded-full">
-                            <div onClick={() => router.push('/cart')} className="w-5">
-                                <CartIcon />
+                        <div className="relative" onClick={() => router.push('/cart')}>
+                            <div className="text-[10px] text-center absolute z-20 -top-1 right-0 w-4 h-4 leading-4 rounded-full bg-[#00000026] bg-opacity-50">
+                                51
+                            </div>
+                            <div className="transition-all duration-200 hover:bg-[#00000026] p-2 rounded-full">
+                                <div className="w-5">
+                                    <CartIcon />
+                                </div>
                             </div>
                         </div>
                         <button
@@ -197,7 +235,7 @@ export default function Header({}: Props) {
                             <div className="flex flex-col gap-4 items-center p-5">
                                 <h1 className="fiont-semibold text-[30px] uppercase">Login</h1>
                                 <div
-                                    className="flex items-center border p-3 rounded-lg w-full gap-2"
+                                    className="flex items-center border p-3 rounded-lg w-full gap-2 cursor-pointer"
                                     onClick={handleLoginGoogle}
                                 >
                                     <div className="w-8 h-8 relative">
@@ -206,7 +244,7 @@ export default function Header({}: Props) {
                                     <p>Login with Google</p>
                                 </div>
                                 <div
-                                    className="flex items-center border p-3 rounded-lg w-full gap-2"
+                                    className="flex items-center border p-3 rounded-lg w-full gap-2 cursor-pointer"
                                     onClick={handleLoginFacebook}
                                 >
                                     <div className="w-8 h-8 relative">

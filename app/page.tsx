@@ -1,6 +1,7 @@
 'use client'
 import CardProduct from '@/components/CardProduct/CardProduct'
 import Carousel from '@/components/CarouselHome/CarouselHome'
+import { ShoesItemData } from '@/datas/shoesItemData'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
@@ -22,13 +23,9 @@ export default function Home() {
                     </p>
                 </div>
                 <div className="grid grid-cols-3 gap-4 py-6">
-                    <CardProduct onClick={handleClick} />
-                    <CardProduct onClick={handleClick} />
-                    <CardProduct onClick={handleClick} />
-                    <CardProduct onClick={handleClick} />
-                    <CardProduct onClick={handleClick} />
-                    <CardProduct onClick={handleClick} />
-                    <CardProduct onClick={handleClick} />
+                    {ShoesItemData.map((shoes) => {
+                        return <CardProduct key={shoes.id} item={shoes} onClick={handleClick} />
+                    })}
                 </div>
             </div>
         </main>

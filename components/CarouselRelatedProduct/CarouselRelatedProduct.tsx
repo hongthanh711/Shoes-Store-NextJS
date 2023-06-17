@@ -8,6 +8,7 @@ import CardProduct from '../CardProduct/CardProduct'
 import ArrowRightIcon from '@/public/svg/ArrowRightIcon'
 import ChevronLeftIcon from '@/public/svg/ChevronLeftIcon'
 import ChevronRightIcon from '@/public/svg/ChevronRightIcon'
+import { ShoesItemData } from '@/datas/shoesItemData'
 
 export default function CarouselRelatedProduct() {
     return (
@@ -25,30 +26,13 @@ export default function CarouselRelatedProduct() {
                 spaceBetween={20}
                 className="w-full h-full relative my-3"
             >
-                <SwiperSlide>
-                    <CardProduct />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <CardProduct />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <CardProduct />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <CardProduct />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <CardProduct />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <CardProduct />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <CardProduct />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <CardProduct />
-                </SwiperSlide>
+                {ShoesItemData.map((shoes) => {
+                    return (
+                        <SwiperSlide key={shoes.id}>
+                            <CardProduct item={shoes} />
+                        </SwiperSlide>
+                    )
+                })}
                 <div className="">
                     <div className="btn-prev bg-slate-600 rounded-full p-2 inline-block opacity-50 cursor-pointer absolute top-1/2 left-0 z-10 -translate-y-1/2">
                         <div className="text-white w-6 h-6 ">

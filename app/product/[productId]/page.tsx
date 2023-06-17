@@ -1,20 +1,77 @@
 'use client'
 import HeartIcon from '@/public/svg/HeartIcon'
-import React from 'react'
+import React, { useState } from 'react'
 import CarouselDetailProduct from '../../../components/CarouselDetailProduct/CarouselDetailProduct'
 import CarouselRelatedProduct from '@/components/CarouselRelatedProduct/CarouselRelatedProduct'
 import Button from '@/components/Button/Button'
 import { useAppSelector } from '@/store/hook'
+import { SizeType } from '@/types/ShoesItem.type'
 
 export default function DetailProduct() {
     // const isLogin = useAppSelector((state) => state.auth.isLogin)
     // console.log(isLogin)
+    const sizesData: SizeType[] = [
+        {
+            size: 'UK 6',
+            enabled: true,
+        },
+        {
+            size: 'UK 6.5',
+            enabled: true,
+        },
+        {
+            size: 'UK 7',
+            enabled: true,
+        },
+        {
+            size: 'UK 7.5',
+            enabled: true,
+        },
+        {
+            size: 'UK 8',
+            enabled: true,
+        },
+        {
+            size: 'UK 8.5',
+            enabled: true,
+        },
+        {
+            size: 'UK 9',
+            enabled: true,
+        },
+        {
+            size: 'UK 9.5',
+            enabled: true,
+        },
+        {
+            size: 'UK 10',
+            enabled: true,
+        },
+        {
+            size: 'UK 10.5',
+            enabled: true,
+        },
+        {
+            size: 'UK 11',
+            enabled: false,
+        },
+        {
+            size: 'UK 11.5',
+            enabled: false,
+        },
+    ]
+
+    const [sizeActive, setSizeActive] = useState<number>(-1)
+
+    const toggleActive = (index: number) => {
+        setSizeActive(index)
+    }
+
     return (
         <div className="p-8">
-            {/* <CarouselDetailProduct /> */}
-            <div className="flex">
+            <div className="flex gap-10">
                 <div className="basis-7/12">
-                    <div className="w-full">aa</div>
+                    <CarouselDetailProduct />
                 </div>
                 <div className="basis-5/12">
                     <div>
@@ -34,14 +91,19 @@ export default function DetailProduct() {
                             <p>Select Guide</p>
                         </div>
                         <div className="grid grid-cols-3 gap-2">
-                            <div className="border py-2 text-center rounded-sm">UK 6</div>
-                            <div className="border py-2 text-center rounded-sm">UK 6</div>
-                            <div className="border py-2 text-center rounded-sm">UK 6</div>
-                            <div className="border py-2 text-center rounded-sm">UK 6</div>
-                            <div className="border py-2 text-center rounded-sm">UK 6</div>
-                            <div className="border py-2 text-center rounded-sm">UK 6</div>
-                            <div className="border py-2 text-center rounded-sm">UK 6</div>
-                            <div className="border py-2 text-center rounded-sm">UK 6</div>
+                            {sizesData.map((size: SizeType, index) => {
+                                return (
+                                    <div
+                                        key={size.size}
+                                        className={`border py-2 text-center rounded-sm cursor-pointer ${
+                                            index === sizeActive && 'border-black'
+                                        } ${!size.enabled && 'bg-[#DDDDDD] pointer-events-none'}`}
+                                        onClick={() => toggleActive(index)}
+                                    >
+                                        {size.size}
+                                    </div>
+                                )
+                            })}
                         </div>
                         <p>Size selection is required</p>
                     </div>
